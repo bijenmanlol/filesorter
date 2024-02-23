@@ -6,7 +6,6 @@ window = tk.Tk()
 window.title("Bestanden sorteerder - Gemaakt door Noah")
 window.geometry("800x470")
 window.resizable(False, False)
-window.iconbitmap("icon.ico")
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
