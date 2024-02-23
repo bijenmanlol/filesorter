@@ -144,10 +144,6 @@ class App:
             self.ft3.destroy()
         except:
             pass
-        try:
-            self.ft4.destroy()
-        except:
-            pass
 
         try:
             cnt = 0
