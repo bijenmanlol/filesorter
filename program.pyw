@@ -43,9 +43,10 @@ mainFrame.create_window((300, 0), window = appFrame, anchor = "n")
 class App:
     def __init__(self):
 
-        self.fl = []
+        self.fl = ["f2"]
 
-        self.famount = 1
+        self.famount = 0
+        self.ramount = 2
         
         self.f1 = tk.Frame(appFrame, bg = "#dedede")
         self.f1.pack(pady = (20, 0), padx = 100)
@@ -75,10 +76,9 @@ class App:
     def delF(self, ext):
 
         exec(f"self.f{ext}.destroy()")
-        ramount = self.famount + 1
-        self.fl.remove(f"f{ramount}")
+        self.fl.remove(f"f{ext}")
         self.famount -= 1
-        mainFrame.configure(scrollregion = (0, 0, 800, 450 + ((self.famount - 1) * 212)))
+        mainFrame.configure(scrollregion = (0, 0, 800, 450 + (self.famount * 212)))
 
     def addF(self):
 
@@ -95,27 +95,27 @@ class App:
         except:
             pass
 
+        self.ramount += 1
         self.famount += 1
-        ramount = self.famount + 1
 
-        self.fl.append(f"f{ramount}")
+        self.fl.append(f"f{self.ramount}")
 
         self.delbut.destroy()
         self.startbut.destroy()
 
-        mainFrame.configure(scrollregion = (0, 0, 800, 450 + ((self.famount - 1) * 212)))
+        mainFrame.configure(scrollregion = (0, 0, 800, 450 + ((self.famount) * 212)))
 
-        exec(f'self.f{ramount} = tk.Frame(appFrame, bg = "#dedede")')
-        exec(f'self.f{ramount}.pack(pady = (20, 0), padx = 20)')
+        exec(f'self.f{self.ramount} = tk.Frame(appFrame, bg = "#dedede")')
+        exec(f'self.f{self.ramount}.pack(pady = (20, 0), padx = 20)')
 
-        exec(f'tk.Label(self.f{ramount},  bg = "#dedede", text = "Selecteer de folder naar waar je een bepaald bestandstype wil sorteren").pack(pady = 5)')
-        exec(f'self.d{ramount} = tk.Entry(self.f{ramount}, width = 50)')
-        exec(f'self.d{ramount}.pack(padx = 20, pady = 5)')
-        exec(f'tk.Button(self.f{ramount}, text = "Open folder", command = lambda self = self: self.getDir("{ramount}")).pack(pady = 5)')
-        exec(f'tk.Label(self.f{ramount},  bg = "#dedede", text = "Welke bestandstype wil je sorteren").pack( pady = 5)')
-        exec(f'self.t{ramount} = tk.Entry(self.f{ramount}, width = 50)')
-        exec(f'self.t{ramount}.pack(padx = 10, pady = 5)')
-        exec(f'tk.Button(self.f{ramount}, text = "Verwijder", command = lambda self = self: self.delF({ramount})).pack(pady = 5)')
+        exec(f'tk.Label(self.f{self.ramount},  bg = "#dedede", text = "Selecteer de folder naar waar je een bepaald bestandstype wil sorteren").pack(pady = 5)')
+        exec(f'self.d{self.ramount} = tk.Entry(self.f{self.ramount}, width = 50)')
+        exec(f'self.d{self.ramount}.pack(padx = 20, pady = 5)')
+        exec(f'tk.Button(self.f{self.ramount}, text = "Open folder", command = lambda self = self: self.getDir("{self.ramount}")).pack(pady = 5)')
+        exec(f'tk.Label(self.f{self.ramount},  bg = "#dedede", text = "Welke bestandstype wil je sorteren").pack( pady = 5)')
+        exec(f'self.t{self.ramount} = tk.Entry(self.f{self.ramount}, width = 50)')
+        exec(f'self.t{self.ramount}.pack(padx = 10, pady = 5)')
+        exec(f'tk.Button(self.f{self.ramount}, text = "Verwijder", command = lambda self = self: self.delF({self.ramount})).pack(pady = 5)')
 
         self.delbut = tk.Button(appFrame, text = "Voeg een bestandtype toe om te sorteren", command = self.addF)
         self.delbut.pack(pady = (20, 0))
@@ -123,7 +123,7 @@ class App:
         self.startbut = tk.Button(appFrame, text = "Start het sorteren", command = self.sort)
         self.startbut.pack(pady = 20)
 
-        mainFrame.yview_moveto((self.famount - 1) * 212)
+        mainFrame.yview_moveto((self.famount) * 212)
 
     def getDir(self, currentdir):
         
