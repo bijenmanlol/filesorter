@@ -9,7 +9,7 @@ window = tk.Tk()
 window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
-currentversion = "File sorter V1.2"
+currentversion = "File sorter V1.2.1"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
