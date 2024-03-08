@@ -9,7 +9,7 @@ window = tk.Tk()
 window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
-currentversion = "File sorter V1.2.1"
+currentversion = "File sorter V1.2"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
@@ -82,7 +82,7 @@ class App:
             if response.status_code == 200:
                 name = response.json()["name"]
                 if name != currentversion:
-                    messagebox.showinfo("Oude versie", "Er is een nieuwe versie van dit programma beschikbaar. U wordt naar de download pagina van de recentste versie doorgestuurd.")
+                    messagebox.showinfo("Verouderde versie", "Er is een nieuwe versie van dit programma beschikbaar. U wordt naar de download pagina van de recentste versie doorgestuurd.")
                     webbrowser.open("https://github.com/bijenmanlol/filesorter/releases/latest")
         except:
             pass
