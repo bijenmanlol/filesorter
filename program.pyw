@@ -1,11 +1,15 @@
-import os, shutil, webbrowser
+import os
+import shutil
+import webbrowser
+import requests
 import tkinter as tk
-from tkinter import filedialog
+from tkinter import filedialog, messagebox
 
 window = tk.Tk()
-window.title("Bestanden sorteerder - Gemaakt door Noah")
+window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
+currentversion = "File sorter V1.2.1"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
@@ -16,7 +20,7 @@ def issues():
 navBar = tk.Frame(width = 800, height= 20)
 navBar.pack(anchor = "w")
 
-tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Gemaakt door Noah{' ' * 93}").grid(row = 0)
+tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Versie 1.2.1{' ' * 110}").grid(row = 0)
 tk.Button(navBar, bg = "#dedede", text = "Broncode bekijken", command = srcCode).grid(row = 0, column = 1)
 tk.Button(navBar, bg = "#dedede", text = "Probleem rapporteren", command = issues).grid(row = 0, column = 2)
 tk.Button(navBar, bg = "#dedede", text = "Sluiten", command = window.destroy).grid(row = 0, column = 3)
@@ -72,6 +76,16 @@ class App:
         
         self.startbut = tk.Button(appFrame, text = "Start het sorteren", command = self.sort)
         self.startbut.pack(pady = 20)
+
+        try:
+            response = requests.get("https://api.github.com/repos/bijenmanlol/filesorter/releases/latest")
+            if response.status_code == 200:
+                name = response.json()["name"]
+                if name != currentversion:
+                    messagebox.showinfo("Oude versie", "Er is een nieuwe versie van dit programma beschikbaar. U wordt naar de download pagina van de recentste versie doorgestuurd.")
+                    webbrowser.open("https://github.com/bijenmanlol/filesorter/releases/latest")
+        except:
+            pass
 
     def delF(self, ext):
 
