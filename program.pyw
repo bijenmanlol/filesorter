@@ -2,14 +2,17 @@ import os
 import shutil
 import webbrowser
 import requests
+import mimetypes
 import tkinter as tk
 from tkinter import filedialog, messagebox
+
+mimetypes.init()
 
 window = tk.Tk()
 window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
-currentversion = "File sorter V1.2.1"
+currentversion = "File sorter V1.3"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
@@ -20,7 +23,7 @@ def issues():
 navBar = tk.Frame(width = 800, height= 20)
 navBar.pack(anchor = "w")
 
-tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Versie 1.2.1{' ' * 110}").grid(row = 0)
+tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Versie 1.3{' ' * 112}").grid(row = 0)
 tk.Button(navBar, bg = "#dedede", text = "Broncode bekijken", command = srcCode).grid(row = 0, column = 1)
 tk.Button(navBar, bg = "#dedede", text = "Probleem rapporteren", command = issues).grid(row = 0, column = 2)
 tk.Button(navBar, bg = "#dedede", text = "Sluiten", command = window.destroy).grid(row = 0, column = 3)
@@ -48,6 +51,7 @@ class App:
     def __init__(self):
 
         self.fl = ["f2"]
+        self.posfts = ["Selecteer folder om te sorteren voor bestandstypes te krijgen"]
 
         self.famount = 0
         self.ramount = 2
@@ -57,9 +61,11 @@ class App:
         self.f2 = tk.Frame(appFrame, bg = "#dedede")
         self.f2.pack(pady = (20, 0), padx = 20)
 
+        self.dr1 = tk.StringVar() 
+        self.dr1.trace_add("write", self.updaterposfts) 
 
         tk.Label(self.f1, bg = "#dedede", text = "Selecteer de folder die je wilt sorteren").pack(pady = 5)
-        self.d1 = tk.Entry(self.f1, width = 50)
+        self.d1 = tk.Entry(self.f1, textvariable = self.dr1, width = 50)
         self.d1.pack(padx = 35, pady = 5)
         tk.Button(self.f1, text = "Open folder", command = lambda: self.getDir("1")).pack(pady = 5)
         
@@ -68,8 +74,11 @@ class App:
         self.d2.pack(padx = 20, pady = 5)
         tk.Button(self.f2, text = "Open folder", command = lambda: self.getDir("2")).pack(pady = 5)
         tk.Label(self.f2,  bg = "#dedede", text = "Welke bestandstype wil je sorteren").pack( pady = 5)
-        self.t2 = tk.Entry(self.f2, width = 50)
-        self.t2.pack(padx = 10, pady = 5)
+
+        self.t2 = tk.StringVar()
+        self.t2.set("Bestandstype")
+        self.dr2 = tk.OptionMenu(self.f2, self.t2, *self.posfts)
+        self.dr2.pack(padx = 10, pady = 5)
 
         self.delbut = tk.Button(appFrame, text = "Voeg een bestandtype toe om te sorteren", command = self.addF)
         self.delbut.pack(pady = (20, 0))
@@ -86,6 +95,26 @@ class App:
                     webbrowser.open("https://github.com/bijenmanlol/filesorter/releases/latest")
         except:
             pass
+
+    def getDir(self, currentdir):
+        
+        dir = filedialog.askdirectory().replace('"', '')
+        exec(f'self.d{currentdir}.delete(0, "end")')
+        exec(f'self.d{currentdir}.insert(0, "{dir}")')
+
+    def updaterposfts(self, var, index, mode):
+        if self.d1.get().replace('"', '') != "":
+            self.posfts.clear()
+            for typer in self.fl:
+                type = typer.replace("f", "")
+                exec(f"menu = self.dr{type}['menu']")
+                exec("menu.delete(0, 'end')")
+                templist = []
+                for file in os.listdir(self.d1.get().replace('"', '')):
+                    if os.path.splitext(file)[1] != "" and os.path.splitext(file)[1] not in templist:
+                        self.posfts.append(os.path.splitext(file)[1])
+                        templist.append(os.path.splitext(file)[1])
+                        exec(f"menu.add_command(label=os.path.splitext(file)[1], command=tk._setit(self.t{type}, os.path.splitext(file)[1]))")
 
     def delF(self, ext):
 
@@ -127,8 +156,10 @@ class App:
         exec(f'self.d{self.ramount}.pack(padx = 20, pady = 5)')
         exec(f'tk.Button(self.f{self.ramount}, text = "Open folder", command = lambda self = self: self.getDir("{self.ramount}")).pack(pady = 5)')
         exec(f'tk.Label(self.f{self.ramount},  bg = "#dedede", text = "Welke bestandstype wil je sorteren").pack( pady = 5)')
-        exec(f'self.t{self.ramount} = tk.Entry(self.f{self.ramount}, width = 50)')
-        exec(f'self.t{self.ramount}.pack(padx = 10, pady = 5)')
+        exec(f"self.t{self.ramount} = tk.StringVar()")
+        exec(f"self.t{self.ramount}.set('Bestandstype')")
+        exec(f"self.dr{self.ramount} = tk.OptionMenu(self.f{self.ramount}, self.t{self.ramount}, *self.posfts)")
+        exec(f"self.dr{self.ramount}.pack(padx = 10, pady = 5)")
         exec(f'tk.Button(self.f{self.ramount}, text = "Verwijder", command = lambda self = self: self.delF({self.ramount})).pack(pady = 5)')
 
         self.delbut = tk.Button(appFrame, text = "Voeg een bestandtype toe om te sorteren", command = self.addF)
@@ -139,11 +170,6 @@ class App:
 
         mainFrame.yview_moveto((self.famount) * 212)
 
-    def getDir(self, currentdir):
-        
-        dir = filedialog.askdirectory().replace('"', '')
-        exec(f'self.d{currentdir}.delete(0, "end")')
-        exec(f'self.d{currentdir}.insert(0, "{dir}")')
     def sort(self):
 
         try:
