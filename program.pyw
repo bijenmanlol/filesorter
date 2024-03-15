@@ -49,7 +49,7 @@ class App:
     def __init__(self):
 
         self.fl = ["f2"]
-        self.posfts = ["Selecteer folder om te sorteren voor bestandstypes te krijgen"]
+        self.posfts = ["Selecteer folder om te sorteren voor bestandstypes te laden"]
 
         self.famount = 0
         self.ramount = 2
@@ -87,7 +87,6 @@ class App:
         try:
             with urllib.request.urlopen("https://api.github.com/repos/bijenmanlol/filesorter/releases/latest") as url:
                 name = json.load(url)["name"]
-                print(name)
                 if name != currentversion:
                     messagebox.showinfo("Verouderde versie", "Er is een nieuwe versie van dit programma beschikbaar. U wordt naar de download pagina van de recentste versie doorgestuurd.")
                     webbrowser.open("https://github.com/bijenmanlol/filesorter/releases/latest")
