@@ -1,18 +1,16 @@
 import os
 import shutil
 import webbrowser
-import requests
-import mimetypes
+import urllib.request
+import json
 import tkinter as tk
 from tkinter import filedialog, messagebox
-
-mimetypes.init()
 
 window = tk.Tk()
 window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
-currentversion = "File sorter V1.3"
+currentversion = "File sorter V1.3.1"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
@@ -87,9 +85,9 @@ class App:
         self.startbut.pack(pady = 20)
 
         try:
-            response = requests.get("https://api.github.com/repos/bijenmanlol/filesorter/releases/latest")
-            if response.status_code == 200:
-                name = response.json()["name"]
+            with urllib.request.urlopen("https://api.github.com/repos/bijenmanlol/filesorter/releases/latest") as url:
+                name = json.load(url)["name"]
+                print(name)
                 if name != currentversion:
                     messagebox.showinfo("Verouderde versie", "Er is een nieuwe versie van dit programma beschikbaar. U wordt naar de download pagina van de recentste versie doorgestuurd.")
                     webbrowser.open("https://github.com/bijenmanlol/filesorter/releases/latest")
