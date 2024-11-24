@@ -1,9 +1,15 @@
 # File sorter / Bestanden sorteerder
 
-### By Noah
+### Desc:
 
-Small tkinter python program to sort file by their file extension.
+-Small tkinter python program to sort file by their file extension.
+-Klein tkinter python programma om bestanden te sorteren op bestandstype.
 
-Klein tkinter python programma om bestanden te sorteren op bestandstype.
 
-Language: dutch
+### Language:
+
+Dutch
+
+&nbsp;
+
+&copy; 2024 - All Rights Reserved
