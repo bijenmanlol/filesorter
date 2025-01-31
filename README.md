@@ -12,4 +12,4 @@ Dutch
 
 &nbsp;
 
-**&copy; 2024 - All Rights Reserved**
+**&copy; 2025 - All Rights Reserved**
