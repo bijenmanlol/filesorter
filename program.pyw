@@ -23,7 +23,7 @@ def issues():
 navBar = tk.Frame(width = 800, height= 20)
 navBar.pack(anchor = "w")
 
-tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Versie 1.3.2{' ' * 110}").grid(row = 0)
+tk.Label(navBar, bg = "#dedede", text = f"Bestanden sorteerder - Versie 1.3.3{' ' * 110}").grid(row = 0)
 tk.Button(navBar, bg = "#dedede", text = "Broncode bekijken", command = srcCode).grid(row = 0, column = 1)
 tk.Button(navBar, bg = "#dedede", text = "Probleem rapporteren", command = issues).grid(row = 0, column = 2)
 tk.Button(navBar, bg = "#dedede", text = "Sluiten", command = window.destroy).grid(row = 0, column = 3)
