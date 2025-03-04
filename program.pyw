@@ -1,3 +1,5 @@
+# File sorter/Bestanden Sorteerder V1.3.3 - https://github.com/bijenmanlol/filesorter
+
 import os
 import shutil
 import webbrowser
@@ -10,7 +12,7 @@ window = tk.Tk()
 window.title("Bestanden sorteerder")
 window.geometry("800x470")
 window.resizable(False, False)
-currentversion = "File sorter V1.3.2"
+currentversion = "File sorter V1.3.3"
 
 def srcCode():
     webbrowser.open("https://github.com/bijenmanlol/filesorter")
@@ -99,7 +101,7 @@ class App:
         exec(f'self.d{currentdir}.delete(0, "end")')
         exec(f'self.d{currentdir}.insert(0, "{dir}")')
 
-    def updaterposfts(self, var, index, mode):
+    def updaterposfts(self, *_):
         if self.d1.get().replace('"', '') != "":
             self.posfts.clear()
             for typer in self.fl:
