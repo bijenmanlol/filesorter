@@ -1,5 +1,7 @@
 # File sorter / Bestanden sorteerder
 
+## DEPRECATED - this program only works until python 3.12, any later version wont work
+
 ### Desc:
 
 - Small tkinter python program to sort file by their file extension.
